@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Kuku Kube Game</h2>
+
+<div id="game"></div>
+
+<script>
+var size = 2;
+var differentSquare = {x: Math.floor(Math.random() * size), y: Math.floor(Math.random() * size)};
+
+function createGame() {
+    var game = document.getElementById('game');
+    game.innerHTML = '';
+    for (var i = 0; i < size; i++) {
+        for (var j = 0; j < size; j++) {
+            var square = document.createElement('div');
+            square.style.width = '30px';
+            square.style.height = '30px';
+            square.style.background = (i === differentSquare.y && j === differentSquare.x) ? '#ff0000' : '#fe0000';
+            square.style.display = 'inline-block';
+            square.style.margin = '1px';
+            square.onclick = (function(i, j) {
+                return function() {
+                    if (i === differentSquare.y && j === differentSquare.x) {
+                        alert('Correct!');
+                        size++;
+                        differentSquare = {x: Math.floor(Math.random() * size), y: Math.floor(Math.random() * size)};
+                        createGame();
+                    } else {
+                        alert('Incorrect!');
+                    }
+                };
+            })(i, j);
+            game.appendChild(square);
+        }
+        game.appendChild(document.createElement('br'));
+    }
+}
+
+createGame();
+</script>
+
+</body>
+</html>
